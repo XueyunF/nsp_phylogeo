@@ -1,45 +1,48 @@
 ## Process of raw reads, alignments and variant calling
-# Index reference
 ```
+Index reference
+
 samtools dict ninespine_v6b.fa > ninespine_v6b.dict
 samtools faidx ninespine_v6b.fa
 bwa index ninespine_v6b.fa
 ```
+
 # Reads alignment
 ```
 bwa mem -t4 -M -R "@RG\tID:SampleID tSM:SampleID tPL:illumina tLB:SampleID tPU:1" ninespine.fa SampleID_1.fq.gz SampleID_2.fq.gz | samtools view -F4 -h -Obam -o sample1_bwa.bam
-```
 
-# Sort reads by coordinate, duplicates remove and index
-```
+Sort reads by coordinate, duplicates remove and index
+
 samtools fixmate -@ 14 -m SampleID_bwa.bam SampleID_bwa_fm.bam
 samtools sort -@ 14 -O bam -o SampleID_bwa_fm_sorted.bam SampleID_bwa_fm.bam
 samtools index -@ 14 SampleID_bwa_fm_sorted.bam SampleID_bwa_fm_sorted.bai
 samtools markdup -@ 14 SampleID_bwa_fm_sorted.bam SampleID_bwa_fm_sorted_md.bam
 samtools index -@ 14 SampleID_bwa_fm_sorted_md.bam SampleID_bwa_fm_sorted_md.bai
-```
-# realignment around indels
-```
+
+Realignment around indels
+
 gatk -T RealignerTargetCreator -R ninespine_v6b.fa -I SampleID_bwa_fm_sorted_md.bam -o SampleID_intervals.list
 
 gatk -T IndelRealigner -R ninespine_v6b.fa -I SampleID_bwa_fm_sorted_md.bam -targetIntervals SampleID_intervals.list -o SampleID_realgn.bam
-```
-# sort and index of cleaned bam
-```
+
+Sort and index of cleaned bam
+
 samtools sort -T /tmp/SampleID -O bam -o SampleID_realgn_sorted.bam SampleID_realgn.bam
 samtools index SampleID_realgn_sorted.bam SampleID_realgn_sorted.bai
-```
+
 # Variant calling
 ```
 Individual call
+
 gatk -T HaplotypeCaller -R ninespine_v6b.fa -I SampleID_realgn_sorted.bam -gt_mode DISCOVERY -ERC GVCF -stand_emit_conf 3 -stand_call_conf 10 -GQB 10 -GQB 20 -GQB 30 -GQB 40 -GQ 50 -variant_index_type LINEAR -variant_index_parameter 128000 -o /dev/stdout | bgzip -s - > data/SampleID.calls.gvcf.gz
 
 Joint calling of all samples
+
 bcftools index -t SampleID.calls.gvcf.gz
 
 gatk -T GenotypeGVCFs -R ninespine_v6b.fa -V Sample1.calls.gvcf.gz .....
 -V Sample889.calls.gvcf.gz -o /dev/stdout | bcftools view -Oz -o Samples.calls.vcf.gz &
-```
+
 # Filter the raw output vcf file
 ```
 bcftools view -T ^outgroup_sites_to_remove.tab Samples.calls.vcf.gz -Oz -o Samples.ogrm.vcf.gz 
