@@ -1,4 +1,4 @@
-Table S3a. Two population symmetrical test with qpWave, the outgroups was set as ANC5					
+Table S6. Two population symmetrical test with qpWave, the outgroups was set as ANC5					
 pop_fix	pop_test	p_rank0_tail	p_rank1_tail	p_rank0_taildiff	p_rank1_taildiff
 SCO-HAR	GBR-GRO	0.000143	1	1	0.000143
 SCO-HAR	BEL-MAL	4.37E-94	1	1	4.37E-94
