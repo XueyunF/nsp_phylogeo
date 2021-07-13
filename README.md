@@ -5,4 +5,4 @@ Content
 
 Pipeline and associated scripts for each of the analyses in the manuscript.
 
-Full results of D-statistics, qpWave and f4-ratio tests can be found in https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/tree/main/Symmetry%20statistics%20and%20admixture%20tests
+Full results of D-statistics, qpWave and f4-ratio tests can be found [here](https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/tree/main/Symmetry%20statistics%20and%20admixture%20tests)
