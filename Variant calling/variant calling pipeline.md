@@ -33,7 +33,7 @@ samtools index SampleID_realgn_sorted.bam SampleID_realgn_sorted.bai
 # Variant calling
 ```
 Individual call
-
+```
 gatk -T HaplotypeCaller -R ninespine_v6b.fa -I SampleID_realgn_sorted.bam -gt_mode DISCOVERY -ERC GVCF -stand_emit_conf 3 -stand_call_conf 10 -GQB 10 -GQB 20 -GQB 30 -GQB 40 -GQ 50 -variant_index_type LINEAR -variant_index_parameter 128000 -o /dev/stdout | bgzip -s - > data/SampleID.calls.gvcf.gz
 
 Joint calling of all samples
@@ -42,6 +42,7 @@ bcftools index -t SampleID.calls.gvcf.gz
 
 gatk -T GenotypeGVCFs -R ninespine_v6b.fa -V Sample1.calls.gvcf.gz .....
 -V Sample889.calls.gvcf.gz -o /dev/stdout | bcftools view -Oz -o Samples.calls.vcf.gz &
+```
 
 # Filter the raw output vcf file
 ```
