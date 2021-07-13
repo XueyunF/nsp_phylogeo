@@ -10,4 +10,6 @@ Pipeline and associated scripts for each of the analyses in the manuscript.
 4) Estimation of the divergence times with [MSMC2](https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/blob/main/Estimation%20of%20the%20divergence%20times%20and%20data%20simulation/MSMC2%20pipeline), [moments](https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/blob/main/Estimation%20of%20the%20divergence%20times%20and%20data%20simulation/Moments%20pipeline) and data simulation with [msprime](https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/blob/main/Estimation%20of%20the%20divergence%20times%20and%20data%20simulation/msprime_script)
 5) [Sex chromosome related analysis](https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/blob/main/Sex%20chromosome%20related%20analysis/sex%20chromosome%20sequecing%20coverage)
 
+Contigs included in nine-spine stickleback reference v6b can be found [here](https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/blob/main/Variant%20calling/NSP_V6b.fasta.fai)
+
 Detailed results of D-statistics, qpWave and f4-ratio tests can be found [here](https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/tree/main/Symmetry%20statistics%20and%20admixture%20tests)
