@@ -28,7 +28,7 @@ plink --bfile SNPset2 --distance 1-ibs square gz --pca --out SNPset2 --noweb
 for K in `seq 2 10`; do admixture --cv SNPset2.bed $K | tee log${K}.out;  done 
 ```
 
-## Phylogenetic analysis with RaxML and ASTRAL with *Pungitius.tymensis* as the outgroup
+## Phylogenomic analysis with RaxML and ASTRAL with *Pungitius.tymensis* as the outgroup
 Select two individual from each popualtion and allow 50% missing data
 ```
 bcftools view -S $downsampled.list nsp889_minQ30_minDP8_minGQ20.vcf.gz | vcftools --vcf - --max-missing 0.5 --recode --recode-INFO-all -c | bcftools view --min-ac=1 -Oz -o SNPset3.vcf.gz
@@ -74,5 +74,5 @@ java -jar astral.5.7.4.jar -i all_besttree.tree -a astral.map -o ASTRAL_tree.spe
 ```
 
 ## Mitochondria phylogeny
-
+Generate mitochondria data
 
