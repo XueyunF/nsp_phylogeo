@@ -66,7 +66,7 @@ python3 vcf2phylip.py -i ~/windowedvcf/${i}.vcf.gz -o PUN-TYM-50a
 ```
 raxmlHPC-PTHREADS-AVX2 -T 12 -m GTRGAMMA --asc-corr=lewis -N 20 -s ${i} -n ${i}.out -p 12345
 ```
-# Put all the best trees into one sigle file for ASTRAL
+# Merge all the best trees into one single file for ASTRAL
 ```
 cat RAxML_bestTree*.tree > all_besttree.tree
 ```
