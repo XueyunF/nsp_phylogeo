@@ -75,6 +75,6 @@ cat RAxML_bestTree*.tree > all_besttree.tree
 java -jar astral.5.7.4.jar -i all_besttree.tree -a astral.map -o ASTRAL_tree.speciestree 2>out2.log
 ```
 
-#Mitochondria phylogeny
+# Mitochondria phylogeny
 
 
