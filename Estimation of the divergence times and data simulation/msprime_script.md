@@ -1,4 +1,5 @@
-#Python-code used to generate simulate data with msprime
+# Python-code used to generate simulate data with msprime
+```
 import msprime
 import numpy as np
 
@@ -138,3 +139,4 @@ for i in range(1,26):
 
     with open(ofile, "w") as vcf_file:
         ts.write_vcf(vcf_file, 2)
+```
