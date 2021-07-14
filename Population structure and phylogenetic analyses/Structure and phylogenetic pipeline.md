@@ -1,9 +1,9 @@
-## Filtering data for population structure and phylogentic analysis 
-Continue from nsp888_minQ30_minDP8_minGQ20.vcf.gz, controlling read depth and missing data for ADMIXTURE and PCA
+# Filtering data for population structure and phylogentic analysis 
+## Continue from nsp888_minQ30_minDP8_minGQ20.vcf.gz, controlling read depth and missing data for ADMIXTURE and PCA
 ```
 vcftools --gzvcf nsp888_minQ30_minDP8_minGQ20.vcf.gz --max-meanDP 25 --max-missing 0.9 --recode --recode-INFO-all -c | bcftools view -Oz -o nsp888_minQ30_minDP8_minGQ20_maxmeanDP25_maxmissing90.vcf.gz
 ```
-LD pruning with plink
+### LD pruning with plink
 ```
 bcftools annotate --set-id +'%CHROM\_%POS\_%REF\_%FIRST_ALT' nsp888_minQ30_minDP8_minGQ20_maxmeanDP25_maxmissing90.vcf.gz -Oz -o nsp888_minQ30_minDP8_minGQ20_maxmeanDP25_maxmissing90_annotated.vcf.gz
 
@@ -15,21 +15,21 @@ zcat nsp888_minQ30_minDP8_minGQ20_maxmeanDP25_maxmissing90_annotated_prune_clean
 
 mv nsp888_minQ30_minDP8_minGQ20_maxmeanDP25_maxmissing90_annotated_prune_clean_noLG.vcf.gz > SNPset2.vcf.gz
 ```
-Convert data for Plink
+### Convert data for Plink and [ADMIXTURE](https://dalexander.github.io/admixture/download.html)
 ```
 plink --vcf SNPset2.vcf.gz --recode --out SNPset2 --noweb
 
 plink --vcf SNPset2.vcf.gz --make-bed --out SNPset2 --noweb 
 ```
-Run PCA and ADMIXTURE analysis
+## Run PCA and ADMIXTURE analysis
 ```
 plink --bfile SNPset2 --distance 1-ibs square gz --pca --out SNPset2 --noweb
 
 for K in `seq 2 10`; do admixture --cv SNPset2.bed $K | tee log${K}.out;  done 
 ```
 
-## Phylogenomic analysis with RaxML and ASTRAL with *Pungitius.tymensis* as the outgroup
-Select two individual from each popualtion and allow 50% missing data
+# Phylogenomic analysis with RaxML and ASTRAL with *Pungitius.tymensis* as the outgroup (nuclear phylogeny)
+## Select two individual from each popualtion and allow 50% missing data
 ```
 bcftools view -S $downsampled.list nsp889_minQ30_minDP8_minGQ20.vcf.gz | vcftools --vcf - --max-missing 0.5 --recode --recode-INFO-all -c | bcftools view --min-ac=1 -Oz -o SNPset3.vcf.gz
 ```
@@ -39,8 +39,8 @@ bcftools query -f '%CHROM\t%POS\n' SNPset3.vcf.gz > positions.txt
 
 for i in `seq 1 21`; do; cat position.txt |grep -w LG${i} >LG${i}.pos.txt ;done
 ```
-### Extract the SNPs of each window 
-R script, subsample each window while discarding the windows in the end of chromosomes which has less than 5000 SNPs
+## Extract the SNPs of each window 
+### R script, subsample each window while discarding the windows in the end of chromosomes which has less than 5000 SNPs
 ```
 for (f in c(1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21)){
 infile<-read.table(paste0("LG",f,".pos.txt"),header = F)
@@ -60,7 +60,7 @@ Convert vcf to phylip format while defining Pungitius.tymensis as the outgroup u
 ```
 python3 vcf2phylip.py -i ~/windowedvcf/${i}.vcf.gz -o PUN-TYM-50a
 ```
-# Run RaxML for each of the windows
+## Run RaxML for each of the windows
 ```
 raxmlHPC-PTHREADS-AVX2 -T 12 -m GTRGAMMA --asc-corr=lewis -N 20 -s ${i} -n ${i}.out -p 12345
 ```
@@ -73,6 +73,41 @@ Run ASTRAL with a predefined map file assgin the populations (e.g. POPA: SAMPLE1
 java -jar astral.5.7.4.jar -i all_besttree.tree -a astral.map -o ASTRAL_tree.speciestree 2>out2.log
 ```
 
-## Mitochondria phylogeny
-Generate mitochondria data
+# Mitochondria phylogeny
+## Process the mitochondria data
+### Fix the ploidy and apply filtering
+```
+bcftools plugin fixploidy -- in.vcf -s fake_sexes.txt -p mtDNA_ploidy.txt | bcftools view -Oz -o ~/mtDNA.vcf.gz
+bcftools view -m2 -M2 -q 0.05 -Q 0.95 -Oz -o mtDNA_maf05.vcf.gz ~/mtDNA.vcf.gz 
+```
+#### mtDNA_ploidy.txt is a file assign the ploidy
+```
+Ppun_mitoSeq 1 16582 M 1
+Ppun_mitoSeq 1 16582 F 1
+```
+#### fake_sexes.txt is a file specifies the gener, here we are doing this for mitochondria data so the gender does not matter
+```
+1-f M
+10-f M
+...
+```
+### Calculate with distance matrix with plink
+```
+plink \
+  --allow-extra-chr
+  --distance square gz 1-ibs
+  --mind 0.1
+  --out mtDNA
+  --vcf mtDNA_maf05.vcf.gz
+```
+### Plot the tree in R:
+```
+library(ape)
+library(phangorn)
+nms=read.table("mtDNA.mdist.id",header=F,sep="\t")$V1
+dst=read.table("mtDNA.mdist.gz",col.names=nms,header=F,fill=T,sep="\t")
 
+njt = nj(as.dist(dst))
+njt2 = root(njt, outgroup = "PUN.TYM", resolve.root = TRUE)
+plot.phylo(njt2,cex=0.2,tip.color = cols)
+```
