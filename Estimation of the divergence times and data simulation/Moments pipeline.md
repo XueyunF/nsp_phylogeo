@@ -17,9 +17,10 @@ nind=$(awk '{x++} END {print x}' "${pop}.bamlist")
 angsd -b ${pop}.bamlist -ref $REF -GL 1 -P 10 $FILTERS $TODO -minInd ${nind}  -out ~/sfs/${pop}/${pop}_sfilt &>> ~/sfs/${pop}/${pop}_sfilt.log
 ```
 ### Filter out sites where heterozygote counts comprise more than 70% of all counts (likely lumped paralogs)
+```
 zcat ~/sfs/${pop}/${pop}_sfilt.snpStat.gz | awk '($3+$4+$5+$6)>0' | awk '($12+$13+$14+$15)/($3+$4+$5+$6)<0.7' | cut -f 1,2  > ~/sfs/${pop}/${pop}.sites2do
 angsd sites index ~/sfs/${pop}/${pop}.sites2do
-
+```
 ## Get folded 1d SFS by set outgroup with reference genome
 ``
 TODO2="-doSaf 1 -anc $REF -ref $REF"
