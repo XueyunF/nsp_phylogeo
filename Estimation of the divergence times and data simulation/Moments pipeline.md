@@ -50,7 +50,7 @@ realSFS -P 16 -sites ~/sfs/joint_sfs_2d/${pop1}_${pop2}.sites2do ~/sfs/${pop1}/$
 ```
 perl ~/sfs/realsfs2dadi.pl ~/sfs/joint_sfs_2d/2dsfs/${pop1}_${pop2}_2d.dadi.sfs ${nindpop1} ${nindpop2} > ~/sfs/joint_sfs_2d/2dsfs/${pop1}_${pop2}.dadi.data
 ```
-## Run moments with Slurm
+## Run moments with Slurm, python scripts by [Paolo Momigliano](https://github.com/Nopaoli) can be found [here](https://github.com/XueyunF/Phylogeographic-analysis-of-nine-spined-sticklebacks/tree/main/Estimation%20of%20the%20divergence%20times%20and%20data%20simulation)
 ```
 MODEL=$(sed -n ${SLURM_ARRAY_TASK_ID}p ~/moments/2dsfs/Runs2 | cut -f 1)
 REP=$(sed -n ${SLURM_ARRAY_TASK_ID}p ~/moments/2dsfs/Runs2 | cut -f 2)
