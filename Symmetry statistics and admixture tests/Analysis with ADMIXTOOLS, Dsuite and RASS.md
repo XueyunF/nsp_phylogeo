@@ -4,7 +4,7 @@
 ```
 vcftools --gzvcf nsp889_minQ30_minDP8_minGQ20.vcf.gz --max-meanDP 25 --max-missing 0.75 --thin 300 --stdout --recode --recode-INFO-all | bcftools view --min-ac=1 -Oz -o SNPset4.vcf.gz
 ```
-### Remove LG in the vcf file to avoid errors and convert the format
+### Remove the LG elements in the vcf file to avoid errors and then convert the format
 ```
 zcat SNPset4.vcf.gz | sed 's/^LG//' | bgzip > SNPset4_noLG.vcf.gz
 plink --vcf SNPset4_noLG.vcf.gz --recode --out SNPset4 --noweb
