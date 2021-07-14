@@ -25,7 +25,7 @@ snpoutname:      SNPset4.snp
 indivoutname:    SNPset4.ind
 familynames:     NO
 ```
-## Analyses with [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools) alternatively you can also use [AdmixR](https://github.com/martinsikora/admixr)
+## Analyses with [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools), you can also use [AdmixR](https://github.com/martinsikora/admixr) for the same analyses
 #### Then run analysis with default settings (default parameter files can be found [here](https://github.com/DReichLab/AdmixTools/tree/master/examples)
 ```
 qp3Pop -p parF3 > parF3_outgroup.out
