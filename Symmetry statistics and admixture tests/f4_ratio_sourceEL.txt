@@ -1,3 +1,4 @@
+Table S9. Detailed results of f4-ratio test with the EL as source.
 A B X C O alpha stderr Zscore
 RUS-BOL RUS-LEV FIN-KAR FRA-VEY CAN-TEM 0.968884 0.004285 226.096
 RUS-BOL RUS-LEV FIN-UKO FRA-VEY CAN-TEM 0.980369 0.004839 202.578
