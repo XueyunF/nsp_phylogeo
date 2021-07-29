@@ -1,4 +1,4 @@
-Table S8. Detailed results qpWave testing of triples for the Baltic sea populations.
+Table S7. Detailed results qpWave testing of triples for the Baltic sea populations.
 pop_fix pop_fix2 pop_test prank0_tail prank1_tail prank2_tail prank0_taildiff prank1_taildiff prank2_taildiff
 RUS-LEV GBR-GRO SCO-HAR 1.80976958e-179 0.553108658 1 1 2.60998854e-182 0.553108658
 RUS-LEV GBR-GRO GBR-GRO NA NA NA NA NA NA
