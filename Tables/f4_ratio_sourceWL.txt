@@ -1,4 +1,4 @@
-Table S7. Detailed results of f4-ratio test with the WL as source.
+Table S9. Detailed results of f4-ratio test with the WL as source.
 A B X C O alpha stderr Zscore
 GBR-GRO BEL-MAL FIN-KAR RUS-LEV CAN-TEM 0.014646 0.004199 3.488
 GBR-GRO BEL-MAL FIN-UKO RUS-LEV CAN-TEM 0.005407 0.005275 1.025
