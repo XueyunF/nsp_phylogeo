@@ -148,7 +148,7 @@ t2 <- read.tree("RAxML_mtDNA.tre")
 #correct for the branch length of ASTRAL tree, if the branch lengths have 0 or NA values
 t1$edge.length[is.na(t1$edge.length)] <- 0
 
-#assign a long branch length to the outgroup (as the tree is unrooted and midpoint rooting will be used)
+#assign a long branch value to the outgroup (as the ASTRAL tree is unrooted and midpoint rooting will be used later)
 t1$edge.length[6] <- 20
 
 #create an association file and specifies the sample should not be compared i.e. the outgroup, t1 and t2 must have identical sample names
