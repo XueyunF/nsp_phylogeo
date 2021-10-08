@@ -121,7 +121,7 @@ plot.phylo(njt2,cex=0.2,tip.color = cols)
 python3 vcf2phylip.py -i nsp91_mtDNA_maf01_SNPs.vcf -o PUN-TYM-50A -m 0
 python3 vcf2phylip.py -i nsp889_mtDNA_maf01_SNPs.vcf -o PUN-TYM-50A -m 0
 ```
-## Run RAxML with 1,000 bootstrap
+## Run RAxML using GTRGAMMA model, correct for ascertainment bias and run 1,000 bootstrap to infer the branch support
 ```
 for i in $(ls *.phy)
 do
