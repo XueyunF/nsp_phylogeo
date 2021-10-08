@@ -70,9 +70,13 @@ cat RAxML_bestTree*.tree > all_besttree.tree
 ```
 Run ASTRAL with a predefined map file assgin the populations (e.g. POPA: SAMPLE1, SAPMLE2)
 ```
-java -jar astral.5.7.4.jar -i all_besttree.tree -a astral.map -o ASTRAL_tree.speciestree 2>out2.log
+java -jar astral.5.7.4.jar -i all_besttree.tree -a astral.map -o ASTRAL_tree.speciestree 2>out1.log
 ```
-
+Run ASTRAL without predefined map file and estimate the Local Posterior Probabilities for the main topology.
+```
+java -jar astral.5.7.4.jar -i all_besttree.tree -o all_besttree_astral.speciestree 2>out2.log
+java -jar astral.5.7.4.jar -t 3 -q all_besttree_astral.speciestree -i all_besttree.tree -o all_besttree_astral_scored.speciestree 2>out3.log
+```
 # Mitochondria phylogeny
 ## Process the mitochondria data
 ### Fix the ploidy and apply filtering
@@ -110,4 +114,26 @@ dst=read.table("mtDNA.mdist.gz",col.names=nms,header=F,fill=T,sep="\t")
 njt = nj(as.dist(dst))
 njt2 = root(njt, outgroup = "PUN.TYM", resolve.root = TRUE)
 plot.phylo(njt2,cex=0.2,tip.color = cols)
+```
+### Generate the RAxML maximum likelihood tree for mitochondria data
+## Convert vcf to phylip format
+```
+python3 vcf2phylip.py -i nsp91_mtDNA_maf01_SNPs.vcf -o PUN-TYM-50A -m 0
+python3 vcf2phylip.py -i nsp889_mtDNA_maf01_SNPs.vcf -o PUN-TYM-50A -m 0
+```
+## Run RAxML with 1,000 bootstrap
+```
+for i in $(ls *.phy)
+do
+echo $i
+raxmlHPC-PTHREADS-AVX2 -T 12 -m GTRGAMMA --asc-corr=lewis -# 1000 -s ${i} -n ${i}.out -p 12345
+done
+```
+## Infer the branch support
+```
+cat RAxML_result.nsp91_mtDNA_maf01_SNPs.min0.phy.out.RUN.* > RAxML_bestTree.nsp91_mtDNA_maf01_SNPs.min0.bootstrap.result
+cat RAxML_result.nsp889_mtDNA_maf01_SNPs.min0.phy.out.RUN.* > RAxML_bestTree.nsp889_mtDNA_maf01_SNPs.min0.bootstrap.result
+
+raxmlHPC-PTHREADS-AVX2 -T 12 -f b -m GTRGAMMA -n RAxML_bestTree.nsp91_mtDNA_maf01_SNPs.min0.bootstrap.tre -t RAxML_bestTree.nsp91_mtDNA_maf01_SNPs.min0.phy.out -z RAxML_bestTree.nsp91_mtDNA_maf01_SNPs.min0.bootstrap.result
+raxmlHPC-PTHREADS-AVX2 -T 12 -f b -m GTRGAMMA -n RAxML_bestTree.nsp889_mtDNA_maf01_SNPs.min0.bootstrap.tre -t RAxML_bestTree.nsp889_mtDNA_maf01_SNPs.min0.phy.out -z RAxML_bestTree.nsp889_mtDNA_maf01_SNPs.min0.bootstrap.result
 ```
