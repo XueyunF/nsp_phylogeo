@@ -137,3 +137,32 @@ cat RAxML_result.nsp889_mtDNA_maf01_SNPs.min0.phy.out.RUN.* > RAxML_bestTree.nsp
 raxmlHPC-PTHREADS-AVX2 -T 12 -f b -m GTRGAMMA -n RAxML_bestTree.nsp91_mtDNA_maf01_SNPs.min0.bootstrap.tre -t RAxML_bestTree.nsp91_mtDNA_maf01_SNPs.min0.phy.out -z RAxML_bestTree.nsp91_mtDNA_maf01_SNPs.min0.bootstrap.result
 raxmlHPC-PTHREADS-AVX2 -T 12 -f b -m GTRGAMMA -n RAxML_bestTree.nsp889_mtDNA_maf01_SNPs.min0.bootstrap.tre -t RAxML_bestTree.nsp889_mtDNA_maf01_SNPs.min0.phy.out -z RAxML_bestTree.nsp889_mtDNA_maf01_SNPs.min0.bootstrap.result
 ```
+## R script to visulize the Cytonuclear incongruence
+```
+library(ape)
+library(phangorn)
+library(phytools)
+t1 <- read.tree("ASTRAL.tre") 
+t2 <- read.tree("RAxML_mtDNA.tre") 
+
+#correct for the branch length of ASTRAL tree, if the branch lengths have 0 or NA values
+t1$edge.length[is.na(t1$edge.length)] <- 0
+
+#assign a long branch length to the outgroup (as the tree is unrooted and midpoint rooting will be used)
+t1$edge.length[6] <- 20
+
+#create an association file and specifies the sample should not be compared i.e. the outgroup, t1 and t2 must have identical sample names
+assoc<-cbind(t1$tip.label,t1$tip.label) 
+assoc<-assoc[-3,] #drop the outgroup sample
+
+#compare the two trees while using midpoint rooting
+obj<-cophylo(midpoint(t2),midpoint(t1),assoc=assoc)
+
+#plot the results and annotate the nodes with support values
+plot(obj,link.type="curved",link.lwd=2,
+     link.col=make.transparent("blue",0.7),fsize=0.4)
+nodelabels(t1$node.label,cex = .5,bg="transparent",frame="n",adj = c(1.5, -0.2))
+nodelabels.cophylo(text=obj$trees[[1]]$node.label,
+                   adj=c(1.5,-0.2),
+                   frame="none",cex=0.5,which="left")
+```
