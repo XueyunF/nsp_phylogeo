@@ -145,7 +145,7 @@ library(phytools)
 t1 <- read.tree("ASTRAL.tre") 
 t2 <- read.tree("RAxML_mtDNA.tre") 
 
-#correct for the branch length of ASTRAL tree, if the branch length values of 0 were read as NA values
+#correct for the branch length of ASTRAL tree, if the branch length values of 0 were read as NAs
 t1$edge.length[is.na(t1$edge.length)] <- 0
 
 #assign a long branch value to the outgroup (as the ASTRAL tree is unrooted and midpoint rooting will be used later)
