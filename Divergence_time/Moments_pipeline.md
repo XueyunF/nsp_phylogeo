@@ -74,9 +74,8 @@ library(ggplot2)
 library(dplyr)
 library(cowplot)
 library(ggpubr)
-pairs<-read.table("/disk2/fengxuey/nsp893/introgression/moments_summary/out/pairs",header = T)
-pairs<-read.table("/disk2/fengxuey/nsp893/introgression/moments_summary/full_dadiout/length",header = T)
-pairs <- read.table("/disk2/fengxuey/nsp893/introgression/FIGS/simulation_out_moments/length2",header = T)
+pairs<-read.table("pairs_info",header = T)
+
 readpairs=function(pairname){
   result1<-read.table(paste0("$PATH",pairname,"_IM"),header = T)
   result2<-read.table(paste0("$PATH",pairname,"_SI"),header = T)
