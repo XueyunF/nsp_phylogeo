@@ -12,4 +12,4 @@ Scripts and code used in manuscript "Complex population history of admixed stick
 
 ### Contigs included in nine-spine stickleback reference v6b can be found [here](https://github.com/XueyunF/nsp_phylogeo/blob/main/Variant_calling/NSP_V6b.fasta.fai)
 
-### Detailed results of D-statistics, qpWave and f4-ratio tests can be found [here](https://github.com/XueyunF/nsp_phylogeo/tree/main/Tables)
+### Detailed results of f4-statistics, qpWave and f4-ratio tests can be found [here](https://github.com/XueyunF/nsp_phylogeo/tree/main/Tables)
