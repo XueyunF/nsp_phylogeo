@@ -23,7 +23,7 @@ kpY=kp&pyo$POS<2e7&pyo$FIN.PYO.0<50&!is.na(pyo$FIN.PYO.0)
 kpA=kp&pyo$POS>2.75e7&pyo$FIN.PYO.0<85&!is.na(pyo$FIN.PYO.0)
 
 
-dat=read.table("LG12_nonref_depth.txt",header=T,colClasses=c("factor","integer","factor","factor",rep("integer",918)),na.strings=".")
+dat=read.table("LG12_nonref_depth.txt",header=T,colClasses=c("factor","integer","factor","factor",rep("integer",887)),na.strings=".")
 
 y.a.ratio.sites <- function(dpt){
     sumY=sum(dpt[kpY],na.rm=T)
