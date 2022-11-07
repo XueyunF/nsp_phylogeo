@@ -1,5 +1,5 @@
 # Phylogeographic-analysis-of-nine-spined-sticklebacks
-Scripts and code used in manuscript "Complex population history of admixed stickleback lineages".
+Scripts and code used in manuscript "Complex population history affects admixture analyses in nine-spined sticklebacks" (https://doi.org/10.1111/mec.16651).
 
 ## Content
 
