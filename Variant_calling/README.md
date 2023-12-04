@@ -9,7 +9,7 @@ bwa index ninespine_v6b.fa
 ```
 ### Align the raw reads
 ```
-bwa mem -t4 -M -R "@RG\tID:SampleID tSM:SampleID tPL:illumina tLB:SampleID tPU:1" ninespine.fa SampleID_1.fq.gz SampleID_2.fq.gz | samtools view -F4 -h -Obam -o sample1_bwa.bam
+bwa mem -t4 -M -R "@RG\tID:SampleID \tSM:SampleID \tPL:illumina \tLB:SampleID \tPU:1" ninespine.fa SampleID_1.fq.gz SampleID_2.fq.gz | samtools view -F4 -h -Obam -o sample1_bwa.bam
 ```
 ### Sort reads by coordinate, duplicates remove and index
 ```
